@@ -1,25 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Leads</title>
-    <style>
-        .lead{
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 6px;
-            padding-right: 6px;
-            margin-top: 10px;
-            background-color: #f6f6f6;
-            width: 100%
-        }
+{% extends 'base.html' %}
 
-    </style>
-</head>
-<body>
+{% block content %}
 <a href="{% url 'leads:lead-list' %}">Go back to leads</a>
 
 <hr/>
@@ -37,6 +18,4 @@
 <br>
 <a href="{% url 'leads:lead-delete' lead.id %}"> delete</a>
 
-
-</body>
-</html>
+{% endblock content %}
