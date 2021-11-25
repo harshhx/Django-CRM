@@ -25,7 +25,11 @@
 <h1>
     Create new Lead
 </h1>
-
+<form method="post" action=".">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Submit</button>
+</form>
 
 
 </body>
