@@ -16,19 +16,19 @@
             background-color: #f6f6f6;
             width: 100%
         }
+
     </style>
 </head>
 <body>
-    <h1>
-        These are all the leads we have
-    </h1>
+<a href="/leads/">Go back to leads</a>
+<hr/>
+<h1>
+    These are the details of {{lead.first_name}}
+</h1>
+<p>
+    This person's age is: {{lead.age}}
+</p>
 
-<ul>
-    {% for lead in leads %}
-    <div class="lead">
-        <a href="/leads/{{lead.id}}"> {{lead}}</a> . Age: {{lead.age}}
-    </div>
-    {% endfor %}
-</ul>
+
 </body>
 </html>
