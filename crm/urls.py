@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from leads.views import  LandingView
+from leads.views import LandingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
