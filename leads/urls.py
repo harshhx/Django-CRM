@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (lead_detail, lead_create, lead_update, lead_delete, LeadListView, LeadDetailView, LeadCreateView, LeadUpdateView, LeadDeleteView)
+from .views import (LeadListView, LeadDetailView, LeadCreateView, LeadUpdateView, LeadDeleteView)
 
 app_name = 'leads'
 
