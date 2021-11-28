@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
-from .models import Lead
+from .models import Lead, Agent
 
 User = get_user_model()
 
@@ -29,3 +29,11 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ("username",)
         field_classes = {'username': UsernameField}
+
+
+class AgentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Agent
+        fields = (
+            'user',
+        )
