@@ -34,7 +34,7 @@ class AgentDetailView(LoginRequiredMixin, generic.DetailView):
     context_object_name = 'agent'
 
 
-class AgentUpdateView(generic.UpdateView):
+class AgentUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'agents/agent_update.html'
     form_class = AgentCreateForm
     queryset = Agent.objects.all()
@@ -43,7 +43,7 @@ class AgentUpdateView(generic.UpdateView):
         return reverse('agents:agent-detail', args=([self.object.id]))
 
 
-class AgentDeleteView(generic.DeleteView):
+class AgentDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = 'agents/agent_delete.html'
     queryset = Agent.objects.all()
 
