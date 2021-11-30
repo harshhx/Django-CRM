@@ -27,12 +27,28 @@ class LeadListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_organizer:
-            queryset = Lead.objects.filter(organisation=user.userprofile)
+            queryset = Lead.objects.filter(
+                organisation=user.userprofile,
+                agent__isnull=False
+            )
         else:
-            queryset = Lead.objects.filter(organisation=user.agent.organisation)
+            queryset = Lead.objects.filter(organisation=user.agent.organisation, agent__isnull=False)
             queryset = queryset.filter(agent__user=user)
 
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(LeadListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_organizer:
+            queryset = Lead.objects.filter(
+                organisation=user.userprofile,
+                agent__isnull=True
+            )
+            context.update({
+                'unassigned': queryset
+            })
+        return context
 
 
 class LeadDetailView(LoginRequiredMixin, DetailView):
@@ -60,7 +76,7 @@ class LeadCreateView(OrganizerAndLoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         send_mail(
-            subject="A new Lead has been created",
+            subject="A new Lead has b een created",
             message="To view the lead please visit the website",
             from_email="test@test.com",
             recipient_list=['test@test2.com']
