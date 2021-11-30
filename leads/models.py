@@ -27,8 +27,8 @@ class Lead(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     age = models.IntegerField(default=0)
-    agent = models.ForeignKey(Agent, blank=True, null=True, on_delete=models.SET_NULL)
-    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=3)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
