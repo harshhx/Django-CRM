@@ -1,10 +1,9 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.shortcuts import reverse
 from django.views import generic
 
 from leads.forms import AgentCreateForm
 from leads.models import Agent
-
 from .mixins import OrganizerAndLoginRequiredMixin
 
 
@@ -25,9 +24,25 @@ class AgentCreateView(OrganizerAndLoginRequiredMixin, generic.CreateView):
         return reverse('agents:agent-list')
 
     def form_valid(self, form):
-        agent = form.save(commit=False)
-        agent.organisation = self.request.user.userprofile
+        user = form.save(commit=False)
+        user.set_password("Password@123")
+        user.is_organizer = False
+        user.is_agent = True
+        user.save()
+        agent = Agent(
+            user=user,
+            organisation=self.request.user.userprofile
+        )
         agent.save()
+
+        send_mail(
+            subject="You are added as an agent",
+            message="You are added to our Costumer Relationship Management system. Please login to get access to your "
+                    "dashboard",
+            from_email="test@test.com",
+            recipient_list=[user.email]
+        )
+
         return super(AgentCreateView, self).form_valid(form)
 
 
