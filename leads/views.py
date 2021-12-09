@@ -4,7 +4,7 @@ from django.shortcuts import reverse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 
 from agents.mixins import OrganizerAndLoginRequiredMixin
-from .forms import LeadModelForm, SignUpForm, AssignAgentForm
+from .forms import LeadModelForm, SignUpForm, AssignAgentForm, LeadCategoryUpdateForm
 from .models import Lead, Category
 
 
@@ -174,6 +174,22 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         return queryset
 
 
+class LeadCategoryUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'leads/category_update.html'
+    form_class = LeadCategoryUpdateForm
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organizer:
+            queryset = Lead.objects.filter(organisation=user.userprofile)
+        else:
+            queryset = Lead.objects.filter(organisation=user.agent.organisation)
+            queryset = queryset.filter(agent__user=user)
+
+        return queryset
+
+    def get_success_url(self):
+        return reverse('leads:lead-detail', args=([self.object.id]))
 #
 # def lead_delete(request, pk):
 #     lead = Lead.objects.get(id=pk)
