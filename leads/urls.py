@@ -6,7 +6,9 @@ from .views import (
     LeadCreateView,
     LeadUpdateView,
     LeadDeleteView,
-    AssignLeadView
+    AssignLeadView,
+    CategoryListView,
+    CategoryDetailView
 )
 
 app_name = 'leads'
@@ -19,4 +21,6 @@ urlpatterns = [
     path('<int:pk>/update', LeadUpdateView.as_view(), name='lead-update'),
     path('<int:pk>/delete', LeadDeleteView.as_view(), name='lead-delete'),
     path('<int:pk>/assign', AssignLeadView.as_view(), name='lead-assign'),
+    path('categories/', CategoryListView.as_view(), name="category-list"),
+    path('<int:pk>/category', CategoryDetailView.as_view(), name='category-detail'),
 ]

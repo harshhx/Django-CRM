@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 
 from agents.mixins import OrganizerAndLoginRequiredMixin
 from .forms import LeadModelForm, SignUpForm, AssignAgentForm
-from .models import Lead
+from .models import Lead, Category
 
 
 class SignUpView(CreateView):
@@ -128,6 +128,50 @@ class AssignLeadView(OrganizerAndLoginRequiredMixin, FormView):
     def get_success_url(self):
         return reverse('leads:lead-list')
 
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    template_name = 'leads/category-list'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organizer:
+            queryset = Category.objects.filter(
+                organisation=user.userprofile,
+            )
+        else:
+            queryset = Category.objects.filter(organisation=user.agent.organisation)
+
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_organizer:
+            queryset = Lead.objects.filter(
+                organisation=user.userprofile,
+            )
+        else:
+            queryset = Lead.objects.filter(organisation=user.agent.organisation)
+        context.update({
+            'unassigned': queryset.filter(category__isnull=True).count()
+        })
+        return context
+
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'leads/category_detail.html'
+    context_object_name = 'category'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organizer:
+            queryset = Category.objects.filter(
+                organisation=user.userprofile,
+            )
+        else:
+            queryset = Category.objects.filter(organisation=user.agent.organisation)
+
+        return queryset
 
 
 #
