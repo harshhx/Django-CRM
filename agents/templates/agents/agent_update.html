@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load tailwind_filters %}
 {% block content %}
 
 <section class="text-gray-700 body-font overflow-hidden">
@@ -19,12 +19,12 @@
                     Update Details
                 </a>
             </div>
-            <form form method="post">
+           <form form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Submit</button>
+                {{ form|crispy }}
+                <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">Submit</button>
             </form>
-            <a href="{% url 'agents:agent-delete' agent.id %}" class="w-1/2 mt-3 flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+            <a href="{% url 'agents:agent-delete' agent.id %}" class="w-1/2 mt-3 flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">
                 Delete
             </a>
         </div>
