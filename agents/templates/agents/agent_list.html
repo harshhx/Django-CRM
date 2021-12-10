@@ -31,8 +31,7 @@
                             {{ agent.user.first_name }} {{ agent.user.last_name }}
                         </h2>
                         <p class="leading-relaxed text-base">
-                            Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo
-                            juice poutine.
+                            Last Login: {{agent.user.last_login}}
                         </p>
                         <a href="{% url 'agents:agent-detail' agent.id %}"
                            class="mt-3 text-indigo-500 inline-flex items-center">
