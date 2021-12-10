@@ -9,10 +9,11 @@
                 <h1 class="text-4xl text-gray-800">Leads</h1>
             </div>
             <div>
-            <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
-                    <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:category-list' %}">Sort by Category</a>
-            </button>
-            {% if request.user.is_organizer %}
+                <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                    <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:category-list' %}">Sort by
+                        Category</a>
+                </button>
+                {% if request.user.is_organizer %}
 
 
                 <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
@@ -20,8 +21,8 @@
                         lead</a>
                 </button>
 
-            {% endif %}
-                </div>
+                {% endif %}
+            </div>
         </div>
         <div class="flex flex-wrap -m-4">
             {% for lead in leads %}
@@ -38,8 +39,7 @@
                             {{ lead.first_name }} {{ lead.last_name }}
                         </h2>
                         <p class="leading-relaxed text-base">
-                            Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo
-                            juice poutine.
+                            {{lead.description}}
                         </p>
                         <a href="{% url 'leads:lead-detail' lead.pk %}"
                            class="mt-3 text-indigo-500 inline-flex items-center">
@@ -58,10 +58,10 @@
         {% if unassigned.exists %}
         <div class="flex flex-wrap -m-4">
             <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
-            <div>
-                <h1 class="pt-6 text-4xl text-gray-800">Unassigned Leads</h1>
-            </div>
+                <div>
+                    <h1 class="pt-6 text-4xl text-gray-800">Unassigned Leads</h1>
                 </div>
+            </div>
             {% for lead in unassigned %}
             <div class="p-4 lg:w-1/2 md:w-full">
                 <div class="flex border-2 rounded-lg border-gray-200 p-8 sm:flex-row flex-col">
@@ -72,21 +72,33 @@
                         </svg>
                     </div>
                     <div class="flex-grow">
-                        <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
-                            {{ lead.first_name }} {{ lead.last_name }}
-                        </h2>
+                        <a href="{% url 'leads:lead-detail' lead.pk %}" >
+                            <h2 class="text-gray-900 text-lg title-font font-medium mb-3 hover:text-blue-900">
+                                {{ lead.first_name }} {{ lead.last_name }}
+                            </h2>
+                        </a>
+
                         <p class="leading-relaxed text-base">
-                            Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo
-                            juice poutine.
+                            {{lead.description}}
                         </p>
+                        <!--                        <div class="flex justify-around ">-->
                         <a href="{% url 'leads:lead-assign' lead.pk %}"
-                           class="mt-3 text-indigo-500 inline-flex items-center">
+                           class="mt-3 text-indigo-500 inline-flex items-center ">
                             Assign Agent
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                  stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                                 <path d="M5 12h14M12 5l7 7-7 7"></path>
                             </svg>
                         </a>
+                        <!--                            <a href="{% url 'leads:lead-detail' lead.pk %}"-->
+                        <!--                               class="mt-3 text-indigo-500 inline-flex items-center">-->
+                        <!--                                View this lead-->
+                        <!--                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"-->
+                        <!--                                     stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">-->
+                        <!--                                    <path d="M5 12h14M12 5l7 7-7 7"></path>-->
+                        <!--                                </svg>-->
+                        <!--                            </a>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
