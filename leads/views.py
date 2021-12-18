@@ -193,6 +193,10 @@ class LeadCategoryUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('leads:lead-detail', args=([self.object.id]))
+
+
+class ContactView(TemplateView):
+    template_name = 'contact.html'
 #
 # def lead_delete(request, pk):
 #     lead = Lead.objects.get(id=pk)
